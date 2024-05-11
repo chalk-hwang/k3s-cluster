@@ -3,3 +3,4 @@
 **/docs/archetypes
 **/docs/hugo_stats.json
 **/docs/public
+.venv

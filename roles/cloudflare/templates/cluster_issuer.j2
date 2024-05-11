@@ -4,7 +4,7 @@ metadata:
   name: {{ cloudflare_cluster_issuer }}
 spec:
   acme:
-    email: {{ cluster_vars.service.postfix.user.alias }}
+    email: {{ lookup('community.general.onepassword', 'ansible-secrets', field='default_email', vault='homelab_private') }}
     privateKeySecretRef:
       name: {{ cloudflare_tls_key_prefix }}-key
     server: {{ cloudflare_acme_server_url }}

@@ -1,18 +1,19 @@
 server:
   hosts:
-    apollo:
-    boreas:
-    cerus:
-
-agent:
-  hosts:
-    chaos:
-    crios:
-    helios:
-    hermes:
-    hypnos:
+    k8s-node-a:
+      ansible_host: k8s-node-a
+      ansible_user: root
+      ansible_node_ip: 10.0.7.10
+      
+# agent:
+#   hosts:
+#     chaos:
+#     crios:
+#     helios:
+#     hermes:
+#     hypnos:
 
 cluster:
   children:
     server:
-    agent:
+    # agent:

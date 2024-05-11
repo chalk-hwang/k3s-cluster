@@ -60,10 +60,10 @@
           ansible.builtin.set_fact:
             server:
               admin:
-                password: "{{ argocd_vars.kubernetes.server.admin.password | string | ansible.builtin.password_hash('blowfish') }}"
+                password: "{{ lookup('community.general.onepassword', 'ansible-secrets', field='argocd_admin_password', vault='homelab_private') | string | ansible.builtin.password_hash('blowfish') }}"
               user:
                 name: '{{ argocd_vars.kubernetes.server.user.name }}'
-                password: "{{ argocd_vars.kubernetes.server.user.password | string | ansible.builtin.password_hash('blowfish') }}"
+                password: "{{ lookup('community.general.onepassword', 'ansible-secrets', field='argocd_user_password', vault='homelab_private') | string | ansible.builtin.password_hash('blowfish') }}"
 
         - name: Install chart
           kubernetes.core.helm:

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+op item get --format json --vault=$OP_CLIENT_VAULT "$OP_CLIENT_ITEM_NAME" |jq '.fields[] | select(.id=="password").value' | tr -d '"'

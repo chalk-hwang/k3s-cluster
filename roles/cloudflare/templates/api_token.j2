@@ -4,5 +4,5 @@ metadata:
   name: {{ cloudflare_vars.kubernetes.api.token.name }}
   namespace: {{ cloudflare_vars.kubernetes.namespace }}
 stringData:
-  {{ cloudflare_vars.kubernetes.api.token.key }}: {{ cloudflare_vars.kubernetes.api.token.value }}
+  {{ cloudflare_vars.kubernetes.api.token.key }}: {{ lookup('community.general.onepassword', 'ansible-secrets', field='cloudflare_api_token_value', vault='homelab_private')  }}
 type: Opaque

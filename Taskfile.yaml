@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  # Directories
+  ANSIBLE_DIR: "{{.ROOT_DIR}}"
+  # Binaries
+  PYTHON_BIN: python3
+  PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
+
+env:
+  KUBECONFIG: "{{.KUBECONFIG_FILE}}"
+  PYTHONDONTWRITEBYTECODE: "1"
+  SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+
+includes:
+  ansible: .taskfiles/Ansible/Taskfile.yaml
+  kubernetes:
+    aliases: ["k8s"]
+    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
+  flux: .taskfiles/Flux/Taskfile.yaml
+  repository:
+    aliases: ["repo"]
+    taskfile: .taskfiles/Repository/Taskfile.yaml
+  talos: .taskfiles/Talos/Taskfile.yaml
+  sops: .taskfiles/Sops/Taskfile.yaml
+  workstation: .taskfiles/Workstation/Taskfile.yaml
+  user:
+    taskfile: .taskfiles/User
+    optional: true
+  secrets:
+    taskfile: .taskfiles/AnsibleVault/Taskfile.yaml
+
+tasks:
+  provisioning:
+    cmd: |
+      {{.VIRTUAL_ENV}}/bin/ansible-playbook \
+        --vault-password-file $A\
+        --inventory {{.ANSIBLE_DIR}}/inventory/hosts.yaml \
+        {{.ANSIBLE_DIR}}/provisioning.yaml {{.CLI_ARGS}}

@@ -34,8 +34,6 @@
     - role: k3s
   serial:
     - 1
-    - 2
-    - 5
   tags: kubernetes
 
 - name: Charts Provisioning
